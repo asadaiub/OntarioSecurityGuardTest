@@ -2,53 +2,98 @@ package com.techplato.ontariosecurityguardtest;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.bottomappbar.BottomAppBar;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 public class AppActivity extends AppCompatActivity {
     BottomAppBar bottomBar;
-    FloatingActionButton fab;
-
+    CircularProgressBar easyProgress, mediumProgress, hardProgress;
+    TextView easyProgressValue, mediumProgressValue, hardProgressValue;
     BottomSheetDialog mBottomSheetDialog;
     View bottomSheet;
     BottomSheetBehavior mBehavior;
+    MaterialButton examBtn;
+
+
+    ConstraintLayout easyParentCL, mediumParentCL, hardParentCL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomBar = findViewById(R.id.bottomBar);
-        fab = findViewById(R.id.fab);
-        bottomSheet = findViewById(R.id.bottomSheet);
+        init();
         mBehavior = BottomSheetBehavior.from(bottomSheet);
         setSupportActionBar(bottomBar);
-
+        initProgress();
         bottomBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showBottomSheetDialog();
             }
         });
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        easyParentCL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bottomBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER) {
-                    bottomBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-
-                } else {
-                    bottomBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-
-                }
+                Toast.makeText(AppActivity.this, "Work is going on! be patient", Toast.LENGTH_SHORT).show();
             }
         });
+        examBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AppActivity.this, "Ops! We are working on this! Thanks", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void initProgress() {
+        int easyDuration = 600;
+        int mediumDuration = 800;
+        int hardDuration = 900;
+
+        easyProgress.setProgressWithAnimation(60, easyDuration);
+        mediumProgress.setProgressWithAnimation(85, mediumDuration);
+        hardProgress.setProgressWithAnimation(90, hardDuration);
+
+        easyProgressValue.setText("60%");
+        mediumProgressValue.setText("85%");
+        hardProgressValue.setText("95%");
+
+
+    }
+
+    void init() {
+        easyParentCL = findViewById(R.id.easyParentCL);
+        mediumParentCL = findViewById(R.id.mediumParentCL);
+        hardParentCL = findViewById(R.id.hardParentCL);
+
+        examBtn = findViewById(R.id.examBtn);
+
+        bottomBar = findViewById(R.id.bottomBar);
+        bottomSheet = findViewById(R.id.bottomSheet);
+
+        //circular progress
+        easyProgress = findViewById(R.id.easyProgress);
+        mediumProgress = findViewById(R.id.mediumProgress);
+        hardProgress = findViewById(R.id.hardProgress);
+
+        //textView for percentage
+        easyProgressValue = findViewById(R.id.easyProgressValue);
+        mediumProgressValue = findViewById(R.id.mediumProgressValue);
+        hardProgressValue = findViewById(R.id.hardProgressValue);
+
 
     }
 
