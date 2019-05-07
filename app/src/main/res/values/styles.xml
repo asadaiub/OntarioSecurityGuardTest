@@ -9,7 +9,7 @@
     </style>
 
     <style name="RippleStyleBlack" parent="RippleStyleWhite">
-        <item name="mrl_rippleColor">#8096989A</item>
+        <item name="mrl_rippleColor">#80FF6534</item>
     </style>
     <style name="RippleStyleWhite">
         <item name="mrl_rippleOverlay">true</item>
@@ -17,5 +17,14 @@
         <item name="mrl_rippleHover">true</item>
         <item name="mrl_rippleAlpha">0.2</item>
     </style>
+
+
+    <style name="bitspeckTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 
 </resources>

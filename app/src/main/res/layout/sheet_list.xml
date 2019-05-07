@@ -58,10 +58,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height=".5dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@color/grey_5"/>
+                android:background="@color/transColorAccent"/>
 
             <com.balysv.materialripple.MaterialRippleLayout
                 style="@style/RippleStyleBlack"
@@ -99,10 +99,10 @@
             </com.balysv.materialripple.MaterialRippleLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height=".5dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@color/grey_5"/>
+                android:background="@color/transColorAccent"/>
 
             <com.balysv.materialripple.MaterialRippleLayout
                 style="@style/RippleStyleBlack"
@@ -140,10 +140,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height=".5dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@color/grey_5"/>
+                android:background="@color/transColorAccent"/>
 
             <com.balysv.materialripple.MaterialRippleLayout
                 style="@style/RippleStyleBlack"

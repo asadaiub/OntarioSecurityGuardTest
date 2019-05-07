@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
 
-    <!--custom color-->
+  <!--  <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>-->
+
+    <color name="colorPrimary">#2A3038</color>
+    <color name="colorPrimaryDark">#1F242A</color>
+    <color name="colorAccent">#FF6534</color>
+  <color name="transColorAccent">#40FF6534</color>
+
+
+  <!--custom color-->
     <color name="grey_black">#252525</color>
     <color name="light_blue">#0AEAFD</color>
     <color name="grey_shade">#303030</color>
 
 
-
-
+    <color name="colorcustom2">#2A3038</color>
+    <color name="colorcustom2dark">#1F242A</color>
+    <color name="colorcustom2aa">#FF6534</color>
 
 
     <color name="overlay_dark_10">#1A000000</color>
