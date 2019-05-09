@@ -1,7 +1,11 @@
 package com.techplato.ontariosecurityguardtest;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.button.MaterialButton;
@@ -15,6 +19,9 @@ import android.widget.Toast;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppActivity extends AppCompatActivity {
     BottomAppBar bottomBar;
     CircularProgressBar easyProgress, mediumProgress, hardProgress;
@@ -23,6 +30,7 @@ public class AppActivity extends AppCompatActivity {
     View bottomSheet;
     BottomSheetBehavior mBehavior;
     MaterialButton examBtn;
+    private QuestionViewModel questionViewModel;
 
 
     ConstraintLayout easyParentCL, mediumParentCL, hardParentCL;
@@ -51,19 +59,37 @@ public class AppActivity extends AppCompatActivity {
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //startActivity(new Intent(AppActivity.this,TestActivity.class));
                 Toast.makeText(AppActivity.this, "Ops! We are working on this! Thanks", Toast.LENGTH_SHORT).show();
             }
         });
 
+        initDB();
+
+
 
     }
 
+    private void initDB() {
+        questionViewModel= ViewModelProviders.of(this).get(QuestionViewModel.class);
+
+        questionViewModel.getEasyAnsweredList().observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(@Nullable List<Question> questions) {
+                Toast.makeText(AppActivity.this, ""+questions.size(), Toast.LENGTH_SHORT).show();
+                easyProgress.setProgressWithAnimation(questions.size());
+                easyProgressValue.setText(questions.size()+"%");
+
+            }
+        });
+    }
+
     private void initProgress() {
-        int easyDuration = 600;
+        //int easyDuration = 600;
         int mediumDuration = 800;
         int hardDuration = 900;
 
-        easyProgress.setProgressWithAnimation(60, easyDuration);
+        //easyProgress.setProgressWithAnimation(60, easyDuration);
         mediumProgress.setProgressWithAnimation(85, mediumDuration);
         hardProgress.setProgressWithAnimation(90, hardDuration);
 
