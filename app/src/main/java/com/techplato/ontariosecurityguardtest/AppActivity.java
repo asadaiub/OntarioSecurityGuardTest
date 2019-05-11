@@ -17,9 +17,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amitshekhar.DebugDB;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.techplato.ontariosecurityguardtest.DB.Question;
+import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AppActivity extends AppCompatActivity {
@@ -43,29 +45,22 @@ public class AppActivity extends AppCompatActivity {
         init();
         mBehavior = BottomSheetBehavior.from(bottomSheet);
         setSupportActionBar(bottomBar);
-        initProgress();
         bottomBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showBottomSheetDialog();
             }
         });
-        easyParentCL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AppActivity.this, "Work is going on! be patient", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(AppActivity.this,TestActivity.class));
-                Toast.makeText(AppActivity.this, "Ops! We are working on this! Thanks", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppActivity.this, "Ops! We are working on this! Thanks "+ DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
             }
         });
 
         initDB();
-
 
 
     }
@@ -73,32 +68,50 @@ public class AppActivity extends AppCompatActivity {
     private void initDB() {
         questionViewModel= ViewModelProviders.of(this).get(QuestionViewModel.class);
 
-        questionViewModel.getEasyAnsweredList().observe(this, new Observer<List<Question>>() {
+        questionViewModel.setAnswered(4);
+
+        /*questionViewModel.getSubcategoryProgressList(1,1).observe(this, new Observer<List<Question>>() {
             @Override
             public void onChanged(@Nullable List<Question> questions) {
-                Toast.makeText(AppActivity.this, ""+questions.size(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(AppActivity.this, "progress size is "+questions.size(), Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+
+        questionViewModel.getSubcategoryList(1).observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(@Nullable List<Integer> integers) {
+               // Toast.makeText(AppActivity.this, "size is "+integers.size(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        questionViewModel.getMProgress(1).observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(@Nullable List<Question> questions) {
                 easyProgress.setProgressWithAnimation(questions.size());
                 easyProgressValue.setText(questions.size()+"%");
+            }
+        });
 
+        questionViewModel.getMProgress(2).observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(@Nullable List<Question> questions) {
+                mediumProgress.setProgressWithAnimation(questions.size());
+                mediumProgressValue.setText(questions.size()+"%");
+            }
+        });
+
+        questionViewModel.getMProgress(3).observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(@Nullable List<Question> questions) {
+                hardProgress.setProgressWithAnimation(questions.size());
+                hardProgressValue.setText(questions.size()+"%");
             }
         });
     }
 
-    private void initProgress() {
-        //int easyDuration = 600;
-        int mediumDuration = 800;
-        int hardDuration = 900;
-
-        //easyProgress.setProgressWithAnimation(60, easyDuration);
-        mediumProgress.setProgressWithAnimation(85, mediumDuration);
-        hardProgress.setProgressWithAnimation(90, hardDuration);
-
-        easyProgressValue.setText("60%");
-        mediumProgressValue.setText("85%");
-        hardProgressValue.setText("95%");
-
-
-    }
 
     void init() {
         easyParentCL = findViewById(R.id.easyParentCL);
@@ -121,6 +134,34 @@ public class AppActivity extends AppCompatActivity {
         hardProgressValue = findViewById(R.id.hardProgressValue);
 
 
+        //
+
+        easyParentCL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSubCategoryActivity(1);
+            }
+        });
+
+        mediumParentCL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSubCategoryActivity(2);
+            }
+        });
+
+        hardParentCL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSubCategoryActivity(3);
+            }
+        });
+
+    }
+    public void goToSubCategoryActivity(int mType){
+        Intent intent=new Intent(AppActivity.this,SubCategory.class);
+        intent.putExtra("difType",mType);
+        startActivity(intent);
     }
 
     private void showBottomSheetDialog() {

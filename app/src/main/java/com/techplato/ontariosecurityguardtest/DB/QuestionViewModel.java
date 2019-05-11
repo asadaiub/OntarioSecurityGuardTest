@@ -1,4 +1,4 @@
-package com.techplato.ontariosecurityguardtest;
+package com.techplato.ontariosecurityguardtest.DB;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -10,14 +10,12 @@ import java.util.List;
 public class QuestionViewModel extends AndroidViewModel {
     private QuestionRepository repository;
     private LiveData<List<Question>> allQuestion;
-    private LiveData<List<Question>> easyAnsweredList;
 
 
     public QuestionViewModel(@NonNull Application application) {
         super(application);
         repository= new QuestionRepository(application);
         allQuestion=repository.getAllQuestion();
-        easyAnsweredList=repository.getEasyAnsweredList();
     }
 
 
@@ -28,7 +26,20 @@ public class QuestionViewModel extends AndroidViewModel {
     public LiveData<List<Question>> getAllQuestion(){
         return allQuestion;
     }
-    public LiveData<List<Question>> getEasyAnsweredList(){
-        return easyAnsweredList;
+    public void setAnswered(int id){
+       repository.setAnswered(id);
     }
+
+
+    public LiveData<List<Question>> getMProgress(int type){
+        return repository.getMProgress(type);
+    }
+
+    public LiveData<List<Integer>> getSubcategoryList(int difType){
+        return repository.getSubcategoryList(difType);
+    }
+
+   /* public LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
+        return repository.getSubcategoryProgressList(difType,secID);
+    }*/
 }

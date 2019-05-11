@@ -1,4 +1,4 @@
-package com.techplato.ontariosecurityguardtest;
+package com.techplato.ontariosecurityguardtest.DB;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;

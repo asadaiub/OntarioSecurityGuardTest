@@ -1,15 +1,13 @@
 package com.techplato.ontariosecurityguardtest;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.amitshekhar.DebugDB;
+import com.techplato.ontariosecurityguardtest.DB.Question;
+import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
