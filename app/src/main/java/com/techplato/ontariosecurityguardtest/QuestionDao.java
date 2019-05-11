@@ -25,6 +25,15 @@ public interface QuestionDao {
     @Query("Select * from question_bank where difficultType=3 and isAnswered=1")
     LiveData<List<Question>> hardProgress();
 
+    @Query("Select * from question_bank where difficultType=:type and isAnswered=1")
+    List<Question> mGetProgress(int type);
+
+    @Query("Select * from question_bank where difficultType=:type and isAnswered=1 and sectionId=:section")
+    List<Question> getTest(int type,int section);
+
+    @Query("Select * from question_bank where specialExam=0")
+    List<Question> getExam();
+
 
 
 
