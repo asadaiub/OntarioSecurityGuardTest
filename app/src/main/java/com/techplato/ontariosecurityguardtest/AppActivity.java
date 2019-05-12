@@ -12,6 +12,7 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -32,10 +33,10 @@ public class AppActivity extends AppCompatActivity {
     View bottomSheet;
     BottomSheetBehavior mBehavior;
     MaterialButton examBtn;
-    private QuestionViewModel questionViewModel;
-
+    private long backPressedTime;
 
     ConstraintLayout easyParentCL, mediumParentCL, hardParentCL;
+    private QuestionViewModel questionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,8 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(AppActivity.this,TestActivity.class));
-                Toast.makeText(AppActivity.this, "Ops! We are working on this! Thanks "+ DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppActivity.this, "For checking Database, " + DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(AppActivity.this,SplashActivity.class));
             }
         });
 
@@ -66,7 +68,7 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void initDB() {
-        questionViewModel= ViewModelProviders.of(this).get(QuestionViewModel.class);
+        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
 
         questionViewModel.setAnswered(4);
 
@@ -78,20 +80,12 @@ public class AppActivity extends AppCompatActivity {
             }
         });*/
 
-        questionViewModel.getSubcategoryList(1).observe(this, new Observer<List<Integer>>() {
-            @Override
-            public void onChanged(@Nullable List<Integer> integers) {
-               // Toast.makeText(AppActivity.this, "size is "+integers.size(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
 
         questionViewModel.getMProgress(1).observe(this, new Observer<List<Question>>() {
             @Override
             public void onChanged(@Nullable List<Question> questions) {
                 easyProgress.setProgressWithAnimation(questions.size());
-                easyProgressValue.setText(questions.size()+"%");
+                easyProgressValue.setText(questions.size() + "%");
             }
         });
 
@@ -99,7 +93,7 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Question> questions) {
                 mediumProgress.setProgressWithAnimation(questions.size());
-                mediumProgressValue.setText(questions.size()+"%");
+                mediumProgressValue.setText(questions.size() + "%");
             }
         });
 
@@ -107,7 +101,7 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Question> questions) {
                 hardProgress.setProgressWithAnimation(questions.size());
-                hardProgressValue.setText(questions.size()+"%");
+                hardProgressValue.setText(questions.size() + "%");
             }
         });
     }
@@ -158,9 +152,10 @@ public class AppActivity extends AppCompatActivity {
         });
 
     }
-    public void goToSubCategoryActivity(int mType){
-        Intent intent=new Intent(AppActivity.this,SubCategory.class);
-        intent.putExtra("difType",mType);
+
+    public void goToSubCategoryActivity(int mType) {
+        Intent intent = new Intent(AppActivity.this, SubCategory.class);
+        intent.putExtra("difType", mType);
         startActivity(intent);
     }
 
@@ -211,7 +206,22 @@ public class AppActivity extends AppCompatActivity {
                 mBottomSheetDialog = null;
             }
         });
+    }
 
 
+    @Override
+    public void onBackPressed() {
+
+        if(backPressedTime+2000>System.currentTimeMillis()){
+           // backtoast.cancel();
+
+            super.onBackPressed();
+            return;
+        }else{
+            //backtoast=Toast.makeText(this, "Press back again to exit!", Toast.LENGTH_SHORT);
+            //backtoast.show();
+            Toast.makeText(this, "Press back again to exit!", Toast.LENGTH_SHORT).show();
+        }
+        backPressedTime=System.currentTimeMillis();
     }
 }

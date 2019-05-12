@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
+
 import java.util.List;
 
 public class QuestionRepository {
@@ -31,7 +33,7 @@ public class QuestionRepository {
         new SetAnsweredAsyncTask(questionDao).execute(id);
     }
 
-    LiveData<List<Integer>> getSubcategoryList(int difType){
+    LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
        return questionDao.getSubcategoryList(difType);
     }
 
@@ -39,9 +41,6 @@ public class QuestionRepository {
         return questionDao.getSubcategoryProgressList(difType,secID);
     }
 */
-
-
-
 
     public LiveData<List<Question>> getAllQuestion(){
         return allQuestions;

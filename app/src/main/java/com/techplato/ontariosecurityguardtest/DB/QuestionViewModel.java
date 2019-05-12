@@ -5,6 +5,8 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
+
 import java.util.List;
 
 public class QuestionViewModel extends AndroidViewModel {
@@ -35,7 +37,7 @@ public class QuestionViewModel extends AndroidViewModel {
         return repository.getMProgress(type);
     }
 
-    public LiveData<List<Integer>> getSubcategoryList(int difType){
+    public LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
         return repository.getSubcategoryList(difType);
     }
 

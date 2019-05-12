@@ -18,11 +18,11 @@ public class Question {
     private String answer;
     private int sectionId;
     private int isAnswered;
+    private int isRight;
     private int specialExam;
     private int optionType;
 
-
-    public Question(int difficultType, String singleQuestion, String optionOne, String optionTwo, String optionThree, String optionFour, String answer, int sectionId, int isAnswered, int specialExam, int optionType) {
+    public Question(int difficultType, String singleQuestion, String optionOne, String optionTwo, String optionThree, String optionFour, String answer, int sectionId, int isAnswered, int isRight, int specialExam, int optionType) {
         this.difficultType = difficultType;
         this.singleQuestion = singleQuestion;
         this.optionOne = optionOne;
@@ -32,6 +32,7 @@ public class Question {
         this.answer = answer;
         this.sectionId = sectionId;
         this.isAnswered = isAnswered;
+        this.isRight = isRight;
         this.specialExam = specialExam;
         this.optionType = optionType;
     }
@@ -78,6 +79,10 @@ public class Question {
 
     public int getIsAnswered() {
         return isAnswered;
+    }
+
+    public int getIsRight() {
+        return isRight;
     }
 
     public int getSpecialExam() {

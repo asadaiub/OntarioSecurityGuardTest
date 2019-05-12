@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 
-@Database(entities = {Question.class}, version = 10, exportSchema = false)
+@Database(entities = {Question.class}, version = 11, exportSchema = false)
 public abstract class QuestionDatabase extends RoomDatabase {
     private static QuestionDatabase instance;
     private static RoomDatabase.Callback roomCallBack = new Callback() {
@@ -52,63 +52,91 @@ public abstract class QuestionDatabase extends RoomDatabase {
 
             questionDao.insert(new Question(1, "What is Your Name?",
                     "Amit", "Rana", "Jhon", "Rick", "Amit",
-                    1, 1, 0, 4));
+                    1, 1,1, 0, 4));
 
             questionDao.insert(new Question(1, "Who Are You?",
                     "actor", "dancer", "singer", "killer", "actor",
-                    1, 1, 0, 4));
+                    1, 1,1, 0, 4));
 
             questionDao.insert(new Question(2, "What is Your Age?",
                     "1", "2", "3", "4", "4",
-                    2, 1, 0, 4));
+                    1, 1,0, 0, 4));
 
             questionDao.insert(new Question(3, "is it day or night?",
                     "day", "night", null, null, "day",
-                    3, 0, 0, 2));
+                    1, 0,-1, 0, 2));
 
             questionDao.insert(new Question(1, "What is Your Name?",
                     "Amit", "Rana", "Jhon", "Rick", "Amit",
-                    1, 0, 0, 4));
+                    1, 0,-1, 0, 4));
 
             questionDao.insert(new Question(1, "Who Are You?",
                     "actor", "dancer", "singer", "killer", "actor",
-                    1, 1, 0, 4));
+                    1, 1, 0,0, 4));
 
             questionDao.insert(new Question(2, "What is Your Age?",
                     "1", "2", "3", "4", "4",
-                    2, 0, 0, 4));
+                    2, 1,1, 0, 4));
 
             questionDao.insert(new Question(3, "is it day or night?",
                     "day", "night", null, null, "day",
-                    3, 1, 0, 2));
+                    2, 1,0, 0, 2));
 
             questionDao.insert(new Question(1, "Who Are You?",
                     "actor", "dancer", "singer", "killer", "actor",
-                    2, 1, 0, 4));
+                    2, 1, 0,0, 4));
 
             questionDao.insert(new Question(2, "What is Your Age?",
                     "1", "2", "3", "4", "4",
-                    2, 1, 0, 4));
+                    2, 1,0, 0, 4));
 
             questionDao.insert(new Question(3, "is it day or night?",
                     "day", "night", null, null, "day",
-                    3, 0, 0, 2));
+                    1, 1,0, 0, 2));
 
             questionDao.insert(new Question(1, "What is Your Name?",
                     "Amit", "Rana", "Jhon", "Rick", "Amit",
-                    3, 0, 0, 4));
+                    3, 0,-1, 0, 4));
 
             questionDao.insert(new Question(1, "Who Are You?",
                     "actor", "dancer", "singer", "killer", "actor",
-                    1, 1, 0, 4));
+                    1, 1, 0,0, 4));
 
             questionDao.insert(new Question(2, "What is Your Age?",
                     "1", "2", "3", "4", "4",
-                    2, 0, 0, 4));
+                    2, 0,-1, 0, 4));
 
             questionDao.insert(new Question(3, "is it day or night?",
                     "day", "night", null, null, "day",
-                    3, 1, 0, 2));
+                    3, 1, 0,0, 2));
+
+            questionDao.insert(new Question(1, "Who Are You?",
+                    "actor", "dancer", "singer", "killer", "actor",
+                    2, 1, 1,0, 4));
+
+            questionDao.insert(new Question(2, "What is Your Age?",
+                    "1", "2", "3", "4", "4",
+                    2, 1,1, 0, 4));
+
+            questionDao.insert(new Question(3, "is it day or night?",
+                    "day", "night", null, null, "day",
+                    1, 1,0, 0, 2));
+
+            questionDao.insert(new Question(1, "What is Your Name?",
+                    "Amit", "Rana", "Jhon", "Rick", "Amit",
+                    3, 1,1, 0, 4));
+
+            questionDao.insert(new Question(1, "Who Are You?",
+                    "actor", "dancer", "singer", "killer", "actor",
+                    1, 1, 0,0, 4));
+
+            questionDao.insert(new Question(2, "What is Your Age?",
+                    "1", "2", "3", "4", "4",
+                    2, 0,-1, 0, 4));
+
+            questionDao.insert(new Question(3, "is it day or night?",
+                    "day", "night", null, null, "day",
+                    3, 1, 0,0, 2));
         }
     }
 
