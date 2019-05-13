@@ -9,6 +9,8 @@
     <color name="colorPrimaryDark">#1F242A</color>
     <color name="colorAccent">#FF6534</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreen">#8bc34a</color>
+    <color name="colorRed">#d50000</color>
   <color name="transColorAccent">#40FF6534</color>
 
   <color name="colorWhiteTransparent">#95FFFFFF</color>

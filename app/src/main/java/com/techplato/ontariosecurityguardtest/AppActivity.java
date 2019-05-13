@@ -72,6 +72,7 @@ public class AppActivity extends AppCompatActivity {
 
         questionViewModel.setAnswered(4);
 
+
         /*questionViewModel.getSubcategoryProgressList(1,1).observe(this, new Observer<List<Question>>() {
             @Override
             public void onChanged(@Nullable List<Question> questions) {

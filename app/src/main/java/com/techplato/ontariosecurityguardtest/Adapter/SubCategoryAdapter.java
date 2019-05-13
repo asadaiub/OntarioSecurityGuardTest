@@ -1,6 +1,7 @@
-package com.techplato.ontariosecurityguardtest;
+package com.techplato.ontariosecurityguardtest.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.techplato.ontariosecurityguardtest.ExamActivity;
 import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
+import com.techplato.ontariosecurityguardtest.R;
+import com.techplato.ontariosecurityguardtest.ShowQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubCategoryHolder subCategoryHolder, int i) {
+    public void onBindViewHolder(@NonNull SubCategoryHolder subCategoryHolder, final int i) {
         subCategoryHolder.partProgress.setProgressWithAnimation(subcategoryModelList.get(i).getIsRight());
         subCategoryHolder.partProgressTitle.setText("Section "+subcategoryModelList.get(i).getSectionId());
         subCategoryHolder.partProgressValue.setText(subcategoryModelList.get(i).getIsRight()+"%");
@@ -45,7 +48,10 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         subCategoryHolder.partParentCL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "yoo", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, ExamActivity.class);
+                intent.putExtra("sectionId",subcategoryModelList.get(i).getSectionId());
+                intent.putExtra("difType",type);
+                context.startActivity(intent);
             }
         });
     }

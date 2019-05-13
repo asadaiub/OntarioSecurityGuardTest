@@ -41,6 +41,10 @@ public class QuestionViewModel extends AndroidViewModel {
         return repository.getSubcategoryList(difType);
     }
 
+    public LiveData<List<Question>> getTestQuestion(int type,int sectionId){
+        return repository.getTestQuestion(type,sectionId);
+    }
+
    /* public LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
         return repository.getSubcategoryProgressList(difType,secID);
     }*/

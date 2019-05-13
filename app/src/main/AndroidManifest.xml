@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".ExamActivity"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/bitspeckTheme"></activity>
+        <activity
+            android:name=".SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -18,7 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowQuestion" />
+        <activity
+            android:name=".ShowQuestion"
+            android:screenOrientation="portrait"
+            android:theme="@style/bitspeckTheme" />
         <activity
             android:name=".SubCategory"
             android:screenOrientation="portrait"
@@ -27,17 +36,12 @@
         <activity
             android:name=".WizardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".AppActivity"
             android:screenOrientation="portrait"
             android:theme="@style/bitspeckTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
     </application>
 

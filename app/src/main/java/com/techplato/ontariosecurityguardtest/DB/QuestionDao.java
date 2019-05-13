@@ -29,9 +29,12 @@ public interface QuestionDao {
 
 
     @Query("Select sectionId, COUNT(answer) AS answer, SUM(CASE isAnswered WHEN 1 THEN 1 ELSE 0 END)" +
-            "  as isAnswered, SUM(CASE isRight WHEN 1 THEN 1 ELSE 0 END)  as isRight " +
+            "  as isAnswered, SUM(CASE isRight WHEN 1 THEN 1 ELSE 0 END) as isRight " +
             "FROM question_bank where difficultType=:difType  group by sectionId")
     LiveData<List<SubcategoryModel>> getSubcategoryList(int difType);
+
+    @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId")
+    LiveData<List<Question>> getTestQuestion(int type,int sectionId);
 
 
 

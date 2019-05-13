@@ -44,7 +44,6 @@ public abstract class QuestionDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
             loadData();
 
-
             return null;
         }
 

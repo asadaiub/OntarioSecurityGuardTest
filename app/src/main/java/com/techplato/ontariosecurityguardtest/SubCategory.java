@@ -11,8 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
+import com.techplato.ontariosecurityguardtest.Adapter.SubCategoryAdapter;
 import com.techplato.ontariosecurityguardtest.DB.Question;
 import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;

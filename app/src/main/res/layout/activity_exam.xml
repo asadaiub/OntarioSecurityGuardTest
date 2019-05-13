@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExamActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/examToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/examCloseIB"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/show_tap"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/examQuestionTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:text="Exam"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/examCloseIB"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/examQuestionTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="What is your name?"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/examToolbar" />
+
+
+    <LinearLayout
+        android:id="@+id/option1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/grey_10"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/option2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/examQuestionTV"
+        app:layout_constraintVertical_bias="0.06999999"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            android:tint="@color/grey_60"
+            app:srcCompat="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/option1TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:text="About"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_90" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/option2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/grey_10"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/option3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option1">
+
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            android:tint="@color/grey_60"
+            app:srcCompat="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/option2TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:text="About"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_90" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/option3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:background="@color/grey_10"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/option4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option2">
+
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            android:tint="@color/grey_60"
+            app:srcCompat="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/option3TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:text="About"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_90" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/option4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/grey_10"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/examNextBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option3">
+
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="14dp"
+            android:tint="@color/grey_60"
+            app:srcCompat="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/option4TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:text="About"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_90" />
+
+    </LinearLayout>
+
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/examNextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="Next"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

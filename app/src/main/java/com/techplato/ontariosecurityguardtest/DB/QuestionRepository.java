@@ -36,6 +36,9 @@ public class QuestionRepository {
     LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
        return questionDao.getSubcategoryList(difType);
     }
+    LiveData<List<Question>> getTestQuestion(int type,int sectionId){
+        return questionDao.getTestQuestion(type,sectionId);
+    }
 
     /*LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
         return questionDao.getSubcategoryProgressList(difType,secID);
