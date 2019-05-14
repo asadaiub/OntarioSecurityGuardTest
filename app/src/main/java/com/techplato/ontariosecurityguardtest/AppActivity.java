@@ -52,17 +52,17 @@ public class AppActivity extends AppCompatActivity {
                 showBottomSheetDialog();
             }
         });
+        initDB();
 
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(AppActivity.this,TestActivity.class));
-                Toast.makeText(AppActivity.this, "For checking Database, " + DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(AppActivity.this,SplashActivity.class));
+                Intent intent=new Intent(AppActivity.this,ExamActivity.class);
+                intent.putExtra("exmType",1);
+                startActivity(new Intent(intent));
             }
         });
 
-        initDB();
 
 
     }
@@ -70,7 +70,6 @@ public class AppActivity extends AppCompatActivity {
     private void initDB() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
 
-        questionViewModel.setAnswered(4);
 
 
         /*questionViewModel.getSubcategoryProgressList(1,1).observe(this, new Observer<List<Question>>() {

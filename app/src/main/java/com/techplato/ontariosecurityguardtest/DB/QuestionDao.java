@@ -21,8 +21,11 @@ public interface QuestionDao {
     @Query("Select * from question_bank where difficultType=:type and isRight=1")
     LiveData<List<Question>> mGetProgress(int type);
 
-    @Query("UPDATE question_bank SET isAnswered = 1 WHERE ID =:id")
-    void setAnswered(int id);
+    @Query("UPDATE question_bank SET isAnswered = 1 , isRight=:ans WHERE ID =:id")
+    void setAnswered(int id,int ans);
+
+    @Query("UPDATE question_bank SET specialExam=1 WHERE id=:id")
+    void updateSpecialExam(int id);
 /*
     @Query("Select distinct(sectionId) FROM  question_bank where difficultType=:difType")
     LiveData<List<Integer>> getSubcategoryList(int difType);*/
@@ -33,8 +36,15 @@ public interface QuestionDao {
             "FROM question_bank where difficultType=:difType  group by sectionId")
     LiveData<List<SubcategoryModel>> getSubcategoryList(int difType);
 
-    @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId")
+    @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId ORDER BY isRight Desc")
     LiveData<List<Question>> getTestQuestion(int type,int sectionId);
+
+    @Query("SELECT * FROM question_bank ORDER BY RANDOM() LIMIT 5")
+    LiveData<List<Question>> getMainExamQuestion();
+
+
+
+
 
 
 

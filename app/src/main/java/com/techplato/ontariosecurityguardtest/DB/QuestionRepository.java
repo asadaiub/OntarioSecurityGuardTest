@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.techplato.ontariosecurityguardtest.Model.AnswerSetModel;
 import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
 
 import java.util.List;
@@ -29,28 +30,52 @@ public class QuestionRepository {
         return questionDao.mGetProgress(type);
     }
 
-    public void setAnswered(int id){
-        new SetAnsweredAsyncTask(questionDao).execute(id);
+    public void setAnswered(int id,int ans){
+        AnswerSetModel answerSetModel=new AnswerSetModel(id,ans);
+        new SetAnsweredAsyncTask(questionDao).execute(answerSetModel);
     }
 
-    LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
+    public LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
        return questionDao.getSubcategoryList(difType);
     }
-    LiveData<List<Question>> getTestQuestion(int type,int sectionId){
+    public LiveData<List<Question>> getTestQuestion(int type,int sectionId){
         return questionDao.getTestQuestion(type,sectionId);
     }
 
-    /*LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
-        return questionDao.getSubcategoryProgressList(difType,secID);
+    LiveData<List<Question>> getMainExamQuestion(){
+        return questionDao.getMainExamQuestion();
     }
-*/
+
+    public void updateSpecialExam(int id){
+        new updateSpecialExamAsyncTask(questionDao).execute(id);
+
+
+    }
+
+    private static class updateSpecialExamAsyncTask extends AsyncTask<Integer,Void,Void> {
+        private QuestionDao questionDao;
+
+        public updateSpecialExamAsyncTask(QuestionDao questionDao) {
+            this.questionDao = questionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            questionDao.updateSpecialExam(integers[0]);
+            return null;
+        }
+    }
+
+
+
+
 
     public LiveData<List<Question>> getAllQuestion(){
         return allQuestions;
     }
 
 
-    private static class SetAnsweredAsyncTask extends AsyncTask<Integer,Void,Void>{
+    private static class SetAnsweredAsyncTask extends AsyncTask<AnswerSetModel,Void,Void>{
         private QuestionDao questionDao;
 
         public SetAnsweredAsyncTask(QuestionDao questionDao) {
@@ -58,12 +83,13 @@ public class QuestionRepository {
         }
 
         @Override
-        protected Void doInBackground(Integer... integers) {
-            questionDao.setAnswered(integers[0]);
+        protected Void doInBackground(AnswerSetModel... answerSetModels) {
+            questionDao.setAnswered(answerSetModels[0].getID(),answerSetModels[0].getIsRight());
+            questionDao.setAnswered(answerSetModels[0].getID(),answerSetModels[0].getIsRight());
             return null;
         }
 
-        /* public InsertQuestionAsyncTask(QuestionDao questionDao) {
+       /* public InsertQuestionAsyncTask(QuestionDao questionDao) {
             this.questionDao = questionDao;
         }
 

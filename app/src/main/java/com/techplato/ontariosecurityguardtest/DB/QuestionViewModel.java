@@ -28,8 +28,13 @@ public class QuestionViewModel extends AndroidViewModel {
     public LiveData<List<Question>> getAllQuestion(){
         return allQuestion;
     }
-    public void setAnswered(int id){
-       repository.setAnswered(id);
+
+    public void setAnswered(int id,int ans){
+       repository.setAnswered(id,ans);
+    }
+
+    public void updateSpecialExam(int id){
+       repository.updateSpecialExam(id);
     }
 
 
@@ -40,10 +45,14 @@ public class QuestionViewModel extends AndroidViewModel {
     public LiveData<List<SubcategoryModel>> getSubcategoryList(int difType){
         return repository.getSubcategoryList(difType);
     }
+    public LiveData<List<Question>> getMainExamQuestion(){
+        return repository.getMainExamQuestion();
+    }
 
     public LiveData<List<Question>> getTestQuestion(int type,int sectionId){
         return repository.getTestQuestion(type,sectionId);
     }
+
 
    /* public LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
         return repository.getSubcategoryProgressList(difType,secID);
