@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.techplato.ontariosecurityguardtest.DB.Question;
-import com.techplato.ontariosecurityguardtest.DB.QuestionDatabase;
 import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 
 import java.text.SimpleDateFormat;
@@ -32,23 +31,20 @@ import java.util.Date;
 import java.util.List;
 
 public class ExamActivity extends AppCompatActivity {
-    private InterstitialAd interstitialAd;
-
     Toolbar examToolbar;
     ImageButton examCloseIB;
-    TextView examQuestionTV, option1TV, option2TV, option3TV, option4TV, examQuestionTimerTV,examAnsweredTV;
+    TextView examQuestionTV, option1TV, option2TV, option3TV, option4TV, examQuestionTimerTV, examAnsweredTV, examQuestionTitleTV;
     LinearLayout option1, option2, option3, option4;
     MaterialButton examNextBtn;
     int counter = 0;
     int isTapped = 0;
     List<Question> mq = new ArrayList<>();
     List<Question> mainExamQuestion = new ArrayList<>();
-    List<Question> resultList = new ArrayList<>();
-    private QuestionViewModel questionViewModel;
     SharedPreferences preferences;
     int sID;
-
     CountDownTimer mTimer = null;
+    private InterstitialAd interstitialAd;
+    private QuestionViewModel questionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +54,9 @@ public class ExamActivity extends AppCompatActivity {
         setSupportActionBar(examToolbar);
 
 
-        interstitialAd=new InterstitialAd(this);
+        interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        AdRequest adRequest=new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         interstitialAd.loadAd(adRequest);
 
         interstitialAd.setAdListener(new AdListener() {
@@ -72,8 +68,8 @@ public class ExamActivity extends AppCompatActivity {
             }
         });
 
-        preferences=getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE);
-        sID = preferences.getInt("sExamId",1);
+        preferences = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE);
+        sID = preferences.getInt("sExamId", 1);
 
 
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
@@ -86,11 +82,12 @@ public class ExamActivity extends AppCompatActivity {
 
         if (fromActivity == 1) {
             examQuestionTimerTV.setVisibility(View.VISIBLE);
+            examQuestionTitleTV.setText("Exam");
 
             questionViewModel.getMainExamQuestion().observe(this, new Observer<List<Question>>() {
                 @Override
                 public void onChanged(@Nullable List<Question> questions) {
-                    mainExamQuestion=questions;
+                    mainExamQuestion = questions;
 
                     if (mainExamQuestion.size() > 0) {
                         initMainExam();
@@ -98,16 +95,18 @@ public class ExamActivity extends AppCompatActivity {
                 }
             });
 
-         startTimer();
+            startTimer();
 
         } else {
             examQuestionTimerTV.setVisibility(View.INVISIBLE);
+            examQuestionTitleTV.setText("Test & Learn");
+
             questionViewModel.getTestQuestion(type, section).observe(this, new Observer<List<Question>>() {
                 @Override
                 public void onChanged(@Nullable List<Question> questions) {
 
                     mq = questions;
-                    Toast.makeText(ExamActivity.this, "mq size:"+mq.size(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ExamActivity.this, "mq size:" + mq.size(), Toast.LENGTH_SHORT).show();
                     Collections.reverse(mq);
                     if (mq.size() > 0) {
                         initQuestion(mq);
@@ -127,7 +126,7 @@ public class ExamActivity extends AppCompatActivity {
         examNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(counter<mainExamQuestion.size()){
+                if (counter < mainExamQuestion.size()) {
                     if (counter == mainExamQuestion.size() - 1) {
                         examNextBtn.setText("Finish");
                     } else {
@@ -137,7 +136,7 @@ public class ExamActivity extends AppCompatActivity {
                     resetColor();
                     showMainData(counter);
                     counter++;
-                }else{
+                } else {
                     ShowMainScore();
                 }
 
@@ -148,34 +147,35 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     public void ShowMainScore() {
-        if(mTimer!=null)mTimer.cancel();
+        if (mTimer != null) mTimer.cancel();
         questionViewModel.getMainExamScore(sID).observe(this, new Observer<List<Question>>() {
             @Override
             public void onChanged(@Nullable List<Question> questions) {
                 //resultList=questions;
-                if(questions.size()>0){
-                    showResultDialog(questions.size());
-                }
+                //if(questions.size()>0){
+                showResultDialog(questions.size());
+                //}
             }
         });
 
 
     }
-    public void showResultDialog(int score){
+
+    public void showResultDialog(int score) {
         SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
         editor.putInt("highScore", score);
         editor.apply();
 
         new AlertDialog.Builder(this)
                 .setTitle("Thank you!")
-                .setMessage("You got "+score+" only")
+                .setMessage("You got " + score + " only")
                 .setCancelable(false)
                 .setNeutralButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(interstitialAd.isLoaded()){
+                        if (interstitialAd.isLoaded()) {
                             interstitialAd.show();
-                        }else{
+                        } else {
                             finish();
                         }
                     }
@@ -194,11 +194,12 @@ public class ExamActivity extends AppCompatActivity {
         option3TV.setText(mQuestion.getOptionThree());
         option4TV.setText(mQuestion.getOptionFour());
 
+
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isTapped==0){
-                    checkMainResult(option1TV.getText().toString(),mItem,option1);
+                if (isTapped == 0) {
+                    checkMainResult(option1TV.getText().toString(), mItem, option1);
                 }
             }
         });
@@ -206,8 +207,8 @@ public class ExamActivity extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isTapped==0){
-                    checkMainResult(option2TV.getText().toString(),mItem,option2);
+                if (isTapped == 0) {
+                    checkMainResult(option2TV.getText().toString(), mItem, option2);
                 }
             }
         });
@@ -215,8 +216,8 @@ public class ExamActivity extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isTapped==0){
-                    checkMainResult(option3TV.getText().toString(),mItem,option3);
+                if (isTapped == 0) {
+                    checkMainResult(option3TV.getText().toString(), mItem, option3);
                 }
             }
         });
@@ -224,8 +225,8 @@ public class ExamActivity extends AppCompatActivity {
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isTapped==0){
-                    checkMainResult(option4TV.getText().toString(),mItem,option4);
+                if (isTapped == 0) {
+                    checkMainResult(option4TV.getText().toString(), mItem, option4);
                 }
             }
         });
@@ -284,12 +285,11 @@ public class ExamActivity extends AppCompatActivity {
         }
 
     }
+
     private void showData(final int item) {
         examNextBtn.setVisibility(View.INVISIBLE);
 
         final Question mQuestion = mq.get(item);
-
-
 
         examQuestionTV.setText(mQuestion.getSingleQuestion());
         if (mQuestion.getOptionType() == 2) {
@@ -303,34 +303,34 @@ public class ExamActivity extends AppCompatActivity {
         }
 
 
-        if(mQuestion.getIsAnswered()==1 && mQuestion.getIsRight()==1){
+        if (mQuestion.getIsAnswered() == 1 && mQuestion.getIsRight() == 1) {
             examNextBtn.setVisibility(View.VISIBLE);
             examAnsweredTV.setVisibility(View.VISIBLE);
-            if (option1TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
-                option1.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-            } else if (option2TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
-                option2.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-            } else if (option3TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
-                option3.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-            } else if (option4TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
-                option4.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-            }
-            isTapped=1;
 
-        }else{
+            if (option1TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
+                option1.setBackground(getResources().getDrawable(R.drawable.custom_border));
+            } else if (option2TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
+                option2.setBackground(getResources().getDrawable(R.drawable.custom_border));
+            } else if (option3TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
+                option3.setBackground(getResources().getDrawable(R.drawable.custom_border));
+            } else if (option4TV.getText().toString().trim().equals(mQuestion.getAnswer())) {
+                option4.setBackground(getResources().getDrawable(R.drawable.custom_border));
+            }
+            isTapped = 1;
+
+        } else {
             examAnsweredTV.setVisibility(View.GONE);
 
-            isTapped=0;
+            isTapped = 0;
         }
-
 
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isTapped == 0 && mQuestion.getIsRight()!= 1) {
+                if (isTapped == 0 && mQuestion.getIsRight() != 1) {
                     checkResult(option1TV.getText().toString(), item, 1, option1);
-                    Toast.makeText(ExamActivity.this, "mq size " + mq.size() + " counter :" + counter, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ExamActivity.this, "mq size " + mq.size() + " counter :" + counter, Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -339,7 +339,7 @@ public class ExamActivity extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isTapped == 0 && mQuestion.getIsRight()!= 1) {
+                if (isTapped == 0 && mQuestion.getIsRight() != 1) {
                     checkResult(option2TV.getText().toString(), item, 2, option2);
                 }
             }
@@ -348,7 +348,7 @@ public class ExamActivity extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isTapped == 0 && mQuestion.getIsRight()!= 1) {
+                if (isTapped == 0 && mQuestion.getIsRight() != 1) {
                     checkResult(option3TV.getText().toString(), item, 3, option3);
                 }
             }
@@ -357,7 +357,7 @@ public class ExamActivity extends AppCompatActivity {
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isTapped == 0 && mQuestion.getIsRight()!= 1) {
+                if (isTapped == 0 && mQuestion.getIsRight() != 1) {
                     checkResult(option4TV.getText().toString(), item, 4, option4);
 
                 }
@@ -373,6 +373,7 @@ public class ExamActivity extends AppCompatActivity {
         examQuestionTimerTV = findViewById(R.id.examQuestionTimerTV);
         examAnsweredTV = findViewById(R.id.examAnsweredTV);
         examQuestionTV = findViewById(R.id.examQuestionTV);
+        examQuestionTitleTV = findViewById(R.id.examQuestionTitleTV);
         option1TV = findViewById(R.id.option1TV);
         option2TV = findViewById(R.id.option2TV);
         option3TV = findViewById(R.id.option3TV);
@@ -383,6 +384,7 @@ public class ExamActivity extends AppCompatActivity {
         option4 = findViewById(R.id.option4);
         examNextBtn = findViewById(R.id.examNextBtn);
         examNextBtn.setText("Next");
+
 
         examCloseIB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -396,7 +398,7 @@ public class ExamActivity extends AppCompatActivity {
         Toast.makeText(this, "mq option " + mq.get(item).getOptionType(), Toast.LENGTH_SHORT).show();
         if (mq.get(item).getAnswer().equals(uAnswer)) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-            layout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+            layout.setBackground(getResources().getDrawable(R.drawable.custom_border));
             //questionViewModel.setAnswered(mq.get(item).getId(),1);
             saveData(mq.get(item).getId(), 1);
 
@@ -404,15 +406,15 @@ public class ExamActivity extends AppCompatActivity {
             //questionViewModel.setAnswered(mq.get(item).getId(),0);
             saveData(mq.get(item).getId(), 0);
 
-            layout.setBackgroundColor(getResources().getColor(R.color.colorRed));
+            layout.setBackground(getResources().getDrawable(R.drawable.custom_border2));
             if (option1TV.getText().toString().trim().equals(mq.get(item).getAnswer())) {
-                option1.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option1.setBackground(getResources().getDrawable(R.drawable.custom_border));
             } else if (option2TV.getText().toString().trim().equals(mq.get(item).getAnswer())) {
-                option2.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option2.setBackground(getResources().getDrawable(R.drawable.custom_border));
             } else if (option3TV.getText().toString().trim().equals(mq.get(item).getAnswer())) {
-                option3.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option3.setBackground(getResources().getDrawable(R.drawable.custom_border));
             } else if (option4TV.getText().toString().trim().equals(mq.get(item).getAnswer())) {
-                option4.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option4.setBackground(getResources().getDrawable(R.drawable.custom_border));
             }
 
 
@@ -425,22 +427,26 @@ public class ExamActivity extends AppCompatActivity {
     }
 
 
-    public void checkMainResult(String uAnswer,int mItem, LinearLayout layout){
+    public void checkMainResult(String uAnswer, int mItem, LinearLayout layout) {
         if (mainExamQuestion.get(mItem).getAnswer().equals(uAnswer)) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-            layout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-            questionViewModel.updateSpecialExam(mainExamQuestion.get(mItem).getId(),sID);
+            layout.setBackground(getResources().getDrawable(R.drawable.custom_border));
+            questionViewModel.updateSpecialExam(mainExamQuestion.get(mItem).getId(), sID);
 
         } else {
-            layout.setBackgroundColor(getResources().getColor(R.color.colorRed));
+            layout.setBackground(getResources().getDrawable(R.drawable.custom_border2));
             if (option1TV.getText().toString().trim().equals(mainExamQuestion.get(mItem).getAnswer())) {
-                option1.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option1.setBackground(getResources().getDrawable(R.drawable.custom_border));
+
             } else if (option2TV.getText().toString().trim().equals(mainExamQuestion.get(mItem).getAnswer())) {
-                option2.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option2.setBackground(getResources().getDrawable(R.drawable.custom_border));
+
             } else if (option3TV.getText().toString().trim().equals(mainExamQuestion.get(mItem).getAnswer())) {
-                option3.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option3.setBackground(getResources().getDrawable(R.drawable.custom_border));
+
             } else if (option4TV.getText().toString().trim().equals(mainExamQuestion.get(mItem).getAnswer())) {
-                option4.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                option4.setBackground(getResources().getDrawable(R.drawable.custom_border));
+
             }
         }
 
@@ -450,12 +456,11 @@ public class ExamActivity extends AppCompatActivity {
     }
 
 
-
-    public void startTimer(){
-        mTimer=new CountDownTimer(15000, 1000) {
+    public void startTimer() {
+        mTimer = new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                examQuestionTimerTV.setText("remaining: " +new SimpleDateFormat("mm:ss").format(new Date( millisUntilFinished)));
+                examQuestionTimerTV.setText("Left: " + new SimpleDateFormat("mm:ss").format(new Date(millisUntilFinished)));
             }
 
             public void onFinish() {

@@ -10,6 +10,8 @@
     <color name="colorAccent">#FF6534</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGreen">#8bc34a</color>
+    <color name="colorGreen2">#388e3c</color>
+    <color name="colorGreendeep">#005005</color>
     <color name="colorRed">#d50000</color>
   <color name="transColorAccent">#40FF6534</color>
 
