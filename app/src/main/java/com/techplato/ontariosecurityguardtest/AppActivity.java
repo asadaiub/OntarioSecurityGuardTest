@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -12,13 +13,14 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amitshekhar.DebugDB;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.techplato.ontariosecurityguardtest.DB.Question;
 import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
@@ -26,6 +28,8 @@ import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 import java.util.List;
 
 public class AppActivity extends AppCompatActivity {
+    AdView appActivityAdView;
+
     BottomAppBar bottomBar;
     CircularProgressBar easyProgress, mediumProgress, hardProgress;
     TextView easyProgressValue, mediumProgressValue, hardProgressValue;
@@ -33,9 +37,10 @@ public class AppActivity extends AppCompatActivity {
     View bottomSheet;
     BottomSheetBehavior mBehavior;
     MaterialButton examBtn;
-    private long backPressedTime;
-
     ConstraintLayout easyParentCL, mediumParentCL, hardParentCL;
+    SharedPreferences preferences;
+    int SPECIAL_EXAM_ID;
+    private long backPressedTime;
     private QuestionViewModel questionViewModel;
 
     @Override
@@ -53,32 +58,44 @@ public class AppActivity extends AppCompatActivity {
             }
         });
         initDB();
+        initAd();
+        preferences = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE);
+
 
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(AppActivity.this,ExamActivity.class);
-                intent.putExtra("exmType",1);
+                SPECIAL_EXAM_ID = preferences.getInt("sExamId", 0);
+
+                if (SPECIAL_EXAM_ID == 5) {
+                    questionViewModel.resetMainExam();
+                    SPECIAL_EXAM_ID=0;
+                }
+                SPECIAL_EXAM_ID++;
+                //Toast.makeText(AppActivity.this, "now "+Constants.SPECIAL_EXAM_ID, Toast.LENGTH_SHORT).show();
+                SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
+                editor.putInt("sExamId", SPECIAL_EXAM_ID);
+                editor.apply();
+
+                Intent intent = new Intent(AppActivity.this, ExamActivity.class);
+                intent.putExtra("exmType", 1);
                 startActivity(new Intent(intent));
             }
         });
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+        appActivityAdView.loadAd(adRequest);
 
 
+    }
+
+    private void initAd() {
+        MobileAds.initialize(this,getString(R.string.admobId));
     }
 
     private void initDB() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
 
-
-
-        /*questionViewModel.getSubcategoryProgressList(1,1).observe(this, new Observer<List<Question>>() {
-            @Override
-            public void onChanged(@Nullable List<Question> questions) {
-               // Toast.makeText(AppActivity.this, "progress size is "+questions.size(), Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
 
 
         questionViewModel.getMProgress(1).observe(this, new Observer<List<Question>>() {
@@ -108,6 +125,8 @@ public class AppActivity extends AppCompatActivity {
 
 
     void init() {
+        appActivityAdView=findViewById(R.id.appActivityAdView);
+
         easyParentCL = findViewById(R.id.easyParentCL);
         mediumParentCL = findViewById(R.id.mediumParentCL);
         hardParentCL = findViewById(R.id.hardParentCL);
@@ -212,16 +231,16 @@ public class AppActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(backPressedTime+2000>System.currentTimeMillis()){
-           // backtoast.cancel();
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            // backtoast.cancel();
 
             super.onBackPressed();
             return;
-        }else{
+        } else {
             //backtoast=Toast.makeText(this, "Press back again to exit!", Toast.LENGTH_SHORT);
             //backtoast.show();
             Toast.makeText(this, "Press back again to exit!", Toast.LENGTH_SHORT).show();
         }
-        backPressedTime=System.currentTimeMillis();
+        backPressedTime = System.currentTimeMillis();
     }
 }

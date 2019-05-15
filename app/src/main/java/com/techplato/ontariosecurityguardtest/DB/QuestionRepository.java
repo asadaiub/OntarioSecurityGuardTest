@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.techplato.ontariosecurityguardtest.Model.AnswerSetModel;
+import com.techplato.ontariosecurityguardtest.Model.SpecialExamAnswerSetModel;
 import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
 
 import java.util.List;
@@ -46,13 +47,33 @@ public class QuestionRepository {
         return questionDao.getMainExamQuestion();
     }
 
-    public void updateSpecialExam(int id){
-        new updateSpecialExamAsyncTask(questionDao).execute(id);
+    void resetMainExam(){
+        new ResetMainExamAsyncTask(questionDao).execute();
+    }
+
+
+    private static class ResetMainExamAsyncTask extends AsyncTask<Void,Void,Void> {
+        private QuestionDao questionDao;
+
+        public ResetMainExamAsyncTask(QuestionDao questionDao) {
+            this.questionDao = questionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            questionDao.resetMainExam();
+            return null;
+        }
+    }
+
+    public void updateSpecialExam(int id,int sId){
+        SpecialExamAnswerSetModel specialExamAnswerSetModel=new SpecialExamAnswerSetModel(id,sId);
+        new updateSpecialExamAsyncTask(questionDao).execute(specialExamAnswerSetModel);
 
 
     }
 
-    private static class updateSpecialExamAsyncTask extends AsyncTask<Integer,Void,Void> {
+    private static class updateSpecialExamAsyncTask extends AsyncTask<SpecialExamAnswerSetModel,Void,Void> {
         private QuestionDao questionDao;
 
         public updateSpecialExamAsyncTask(QuestionDao questionDao) {
@@ -60,8 +81,8 @@ public class QuestionRepository {
         }
 
         @Override
-        protected Void doInBackground(Integer... integers) {
-            questionDao.updateSpecialExam(integers[0]);
+        protected Void doInBackground(SpecialExamAnswerSetModel... specialExamAnswerSetModels) {
+            questionDao.updateSpecialExam(specialExamAnswerSetModels[0].getId(),specialExamAnswerSetModels[0].getSpecialExamId());
             return null;
         }
     }
@@ -84,7 +105,6 @@ public class QuestionRepository {
 
         @Override
         protected Void doInBackground(AnswerSetModel... answerSetModels) {
-            questionDao.setAnswered(answerSetModels[0].getID(),answerSetModels[0].getIsRight());
             questionDao.setAnswered(answerSetModels[0].getID(),answerSetModels[0].getIsRight());
             return null;
         }
@@ -113,4 +133,11 @@ public class QuestionRepository {
             return null;
         }
     }
+
+
+    public LiveData<List<Question>> getMainExamScore(int sId){
+        return questionDao.getMainExamScore(sId);
+    }
+
+
 }

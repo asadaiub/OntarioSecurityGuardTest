@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         if (isfirstTime) {
             SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
             editor.putBoolean("isFirstTime", false);
+            editor.putInt("sExamId",0);
             editor.apply();
             Intent i = new Intent(SplashActivity.this, WizardActivity.class);
             startActivity(i);

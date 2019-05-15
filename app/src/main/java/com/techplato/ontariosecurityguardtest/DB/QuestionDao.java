@@ -24,8 +24,8 @@ public interface QuestionDao {
     @Query("UPDATE question_bank SET isAnswered = 1 , isRight=:ans WHERE ID =:id")
     void setAnswered(int id,int ans);
 
-    @Query("UPDATE question_bank SET specialExam=1 WHERE id=:id")
-    void updateSpecialExam(int id);
+    @Query("UPDATE question_bank SET specialExam=1,specialExamId=:sId WHERE id=:id")
+    void updateSpecialExam(int id,int sId);
 /*
     @Query("Select distinct(sectionId) FROM  question_bank where difficultType=:difType")
     LiveData<List<Integer>> getSubcategoryList(int difType);*/
@@ -39,8 +39,20 @@ public interface QuestionDao {
     @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId ORDER BY isRight Desc")
     LiveData<List<Question>> getTestQuestion(int type,int sectionId);
 
-    @Query("SELECT * FROM question_bank ORDER BY RANDOM() LIMIT 5")
+    @Query("SELECT * FROM question_bank where specialExam=0 and specialExamId=0 ORDER BY RANDOM() LIMIT 5")
     LiveData<List<Question>> getMainExamQuestion();
+
+
+    @Query("select * from question_bank WHERE specialExamId=:sId")
+    LiveData<List<Question>> getMainExamScore(int sId);
+
+
+
+
+    @Query("UPDATE question_bank SET specialExam=0,specialExamId=0 WHERE specialExam=1")
+    void resetMainExam();
+
+
 
 
 

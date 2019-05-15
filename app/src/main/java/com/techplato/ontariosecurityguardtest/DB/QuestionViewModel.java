@@ -33,8 +33,8 @@ public class QuestionViewModel extends AndroidViewModel {
        repository.setAnswered(id,ans);
     }
 
-    public void updateSpecialExam(int id){
-       repository.updateSpecialExam(id);
+    public void updateSpecialExam(int id,int sId){
+       repository.updateSpecialExam(id,sId);
     }
 
 
@@ -52,7 +52,15 @@ public class QuestionViewModel extends AndroidViewModel {
     public LiveData<List<Question>> getTestQuestion(int type,int sectionId){
         return repository.getTestQuestion(type,sectionId);
     }
+    public void resetMainExam()
+    {
+        repository.resetMainExam();
+    }
 
+
+    public LiveData<List<Question>> getMainExamScore(int sId){
+        return repository.getMainExamScore(sId);
+    }
 
    /* public LiveData<List<Question>> getSubcategoryProgressList(int difType, int secID){
         return repository.getSubcategoryProgressList(difType,secID);
