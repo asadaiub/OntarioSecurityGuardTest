@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.android.gms.ads.AdView;
 import com.techplato.ontariosecurityguardtest.Adapter.SubCategoryAdapter;
 import com.techplato.ontariosecurityguardtest.DB.Question;
 import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubCategory extends AppCompatActivity {
+    AdView subActivityAdView;
+
     LiveData<List<Question>> subListProgress;
     List<SubcategoryModel> subcategoryModelList;
     SubCategoryAdapter subCategoryAdapter;
@@ -38,6 +41,7 @@ public class SubCategory extends AppCompatActivity {
 
         subCategoryRV=findViewById(R.id.subCategoryRV);
         subcategoryToolbar=findViewById(R.id.subcategoryToolbar);
+        subActivityAdView=findViewById(R.id.subActivityAdView);
         setSupportActionBar(subcategoryToolbar);
 
         subcategoryModelList=new ArrayList<>();
@@ -65,6 +69,8 @@ public class SubCategory extends AppCompatActivity {
                 finish();
             }
         });
+
+        subActivityAdView.loadAd(Constants.mAdRequest());
 
 
     }

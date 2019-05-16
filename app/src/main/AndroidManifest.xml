@@ -29,14 +29,9 @@
 
         </activity>
         <activity
-            android:name=".ShowQuestion"
-            android:screenOrientation="portrait"
-            android:theme="@style/bitspeckTheme" />
-        <activity
             android:name=".SubCategory"
             android:screenOrientation="portrait"
             android:theme="@style/bitspeckTheme" />
-        <activity android:name=".TestActivity" />
         <activity
             android:name=".WizardActivity"
             android:screenOrientation="portrait"

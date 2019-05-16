@@ -14,7 +14,6 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.techplato.ontariosecurityguardtest.ExamActivity;
 import com.techplato.ontariosecurityguardtest.Model.SubcategoryModel;
 import com.techplato.ontariosecurityguardtest.R;
-import com.techplato.ontariosecurityguardtest.ShowQuestion;
 
 import java.util.ArrayList;
 import java.util.List;

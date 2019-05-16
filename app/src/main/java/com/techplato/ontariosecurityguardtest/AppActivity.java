@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -72,7 +71,6 @@ public class AppActivity extends AppCompatActivity {
                     SPECIAL_EXAM_ID=0;
                 }
                 SPECIAL_EXAM_ID++;
-                //Toast.makeText(AppActivity.this, "now "+Constants.SPECIAL_EXAM_ID, Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
                 editor.putInt("sExamId", SPECIAL_EXAM_ID);
                 editor.apply();
@@ -83,8 +81,7 @@ public class AppActivity extends AppCompatActivity {
             }
         });
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        appActivityAdView.loadAd(adRequest);
+        appActivityAdView.loadAd(Constants.mAdRequest());
 
 
     }

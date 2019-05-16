@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/examAnsweredTV" />
+        app:layout_constraintTop_toBottomOf="@+id/examToolbar" />
 
 
     <LinearLayout
@@ -89,9 +89,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/grey_10"
+        android:background="@drawable/custom_border_def"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -99,7 +99,7 @@
         app:layout_constraintBottom_toTopOf="@+id/option2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/examQuestionTV"
+        app:layout_constraintTop_toBottomOf="@+id/examAnsweredTV"
         app:layout_constraintVertical_bias="0.06999999"
         app:layout_constraintVertical_chainStyle="packed">
 
@@ -131,7 +131,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/grey_10"
+        android:background="@drawable/custom_border_def"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -169,7 +169,8 @@
 
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/grey_10"
+
+        android:background="@drawable/custom_border_def"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -206,7 +207,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/grey_10"
+        android:background="@drawable/custom_border_def"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -242,20 +243,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="Next"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/examActivityAdView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/examAnsweredTV"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
         android:background="@color/colorAccent"
         android:fontFamily="serif-monospace"
         android:paddingLeft="2dp"
@@ -263,12 +263,25 @@
         android:text="Answered"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/examToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/examQuestionTV" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/examActivityAdView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/adUnitId"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
