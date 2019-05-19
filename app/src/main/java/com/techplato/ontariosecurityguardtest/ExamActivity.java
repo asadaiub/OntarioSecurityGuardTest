@@ -2,21 +2,18 @@ package com.techplato.ontariosecurityguardtest;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdView;
@@ -65,6 +62,9 @@ public class ExamActivity extends AppCompatActivity {
             public void onAdClosed() {
                 // Code to be executed when the interstitial ad is closed.
                 //interstitialAd.loadAd(new AdRequest.Builder().build());
+               /* Intent intent = new Intent(ExamActivity.this, AppActivity.class);
+                startActivity(intent);
+                ((Activity) ExamActivity.this).finish();*/
                 finish();
             }
         });
@@ -166,23 +166,9 @@ public class ExamActivity extends AppCompatActivity {
         editor.putInt("highScore", score);
         editor.apply();
 
-        new AlertDialog.Builder(this)
-                .setTitle("Thank you!")
-                .setMessage("You got " + score + " only")
-                .setCancelable(false)
-                .setNeutralButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (interstitialAd.isLoaded()) {
-                            interstitialAd.show();
-                        } else {
-                            finish();
-                        }
-                    }
-                })
+        ShowDialog showDialog = new ShowDialog();
+        showDialog.showCustomDialog(this, "Thanks", "You got " + score + " only", interstitialAd);
 
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 
     private void showMainData(final int mItem) {
@@ -512,9 +498,6 @@ public class ExamActivity extends AppCompatActivity {
         option2TV.setTextColor(getResources().getColor(android.R.color.black));
         option3TV.setTextColor(getResources().getColor(android.R.color.black));
         option4TV.setTextColor(getResources().getColor(android.R.color.black));
-
-
-
 
 
     }

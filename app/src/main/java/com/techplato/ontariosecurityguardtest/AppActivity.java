@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amitshekhar.DebugDB;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -60,10 +61,10 @@ public class AppActivity extends AppCompatActivity {
         initAd();
         preferences = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE);
 
-
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(AppActivity.this, "DB: "+DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
                 SPECIAL_EXAM_ID = preferences.getInt("sExamId", 0);
 
                 if (SPECIAL_EXAM_ID == 5) {

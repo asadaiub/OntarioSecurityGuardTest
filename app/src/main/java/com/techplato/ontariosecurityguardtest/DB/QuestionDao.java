@@ -26,18 +26,25 @@ public interface QuestionDao {
 
     @Query("UPDATE question_bank SET specialExam=1,specialExamId=:sId WHERE id=:id")
     void updateSpecialExam(int id,int sId);
-/*
+
+    /*
     @Query("Select distinct(sectionId) FROM  question_bank where difficultType=:difType")
     LiveData<List<Integer>> getSubcategoryList(int difType);*/
 
 
     @Query("Select sectionId, COUNT(answer) AS answer, SUM(CASE isAnswered WHEN 1 THEN 1 ELSE 0 END)" +
-            "  as isAnswered, SUM(CASE isRight WHEN 1 THEN 1 ELSE 0 END) as isRight " +
+            " as isAnswered, SUM(CASE isRight WHEN 1 THEN 1 ELSE 0 END) as isRight " +
             "FROM question_bank where difficultType=:difType  group by sectionId")
     LiveData<List<SubcategoryModel>> getSubcategoryList(int difType);
 
+
+
+
     @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId ORDER BY isRight Desc")
     LiveData<List<Question>> getTestQuestion(int type,int sectionId);
+
+
+
 
     @Query("SELECT * FROM question_bank where specialExam=0 and specialExamId=0 ORDER BY RANDOM() LIMIT 5")
     LiveData<List<Question>> getMainExamQuestion();
