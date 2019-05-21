@@ -7,6 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 
 @Database(entities = {Question.class}, version = 12, exportSchema = false)
@@ -55,7 +56,7 @@ public abstract class QuestionDatabase extends RoomDatabase {
 
             questionDao.insert(new Question(1, "Who Are You?2",
                     "actor", "dancer", "singer", "killer", "actor",
-                    1, 0,-1, 0,0, 4));
+                    1, 0,3, 0,0, 4));
 
             questionDao.insert(new Question(2, "What is Your Age?3",
                     "1", "2", "3", "4", "4",
@@ -129,7 +130,7 @@ public abstract class QuestionDatabase extends RoomDatabase {
 
             questionDao.insert(new Question(3, "What is Your Age?19",
                     "1", "2", "3", "4", "4",
-                    2, 0,-1, 0,0, 4));
+                    2, 0,3, 0,0, 4));
 
 
             questionDao.insert(new Question(3, "is it day or night?2",

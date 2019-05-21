@@ -56,6 +56,9 @@ public class QuestionViewModel extends AndroidViewModel {
     {
         repository.resetMainExam();
     }
+    public void resetTable(){
+        repository.resetTable();
+    }
 
 
     public LiveData<List<Question>> getMainExamScore(int sId){

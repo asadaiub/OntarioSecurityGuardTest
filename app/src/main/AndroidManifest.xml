@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.techplato.ontariosecurityguardtest">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,19 +13,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ExamActivity"
-
             android:screenOrientation="portrait"
-            android:theme="@style/bitspeckTheme"></activity>
+            android:theme="@style/bitspeckTheme" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -40,15 +33,17 @@
             android:name=".AppActivity"
             android:screenOrientation="portrait"
             android:theme="@style/bitspeckTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admobId"/>
-
-
+            android:value="@string/admobId" />
     </application>
 
 </manifest>

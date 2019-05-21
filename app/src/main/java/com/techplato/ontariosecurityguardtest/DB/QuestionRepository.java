@@ -139,5 +139,23 @@ public class QuestionRepository {
         return questionDao.getMainExamScore(sId);
     }
 
+    public void resetTable(){
+        new ResetTableAsyncTask(questionDao).execute();
+    }
+
+    private static class ResetTableAsyncTask extends AsyncTask<Void,Void,Void>{
+        private QuestionDao questionDao;
+
+        public ResetTableAsyncTask(QuestionDao questionDao) {
+            this.questionDao = questionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            questionDao.resetTable();
+            return null;
+        }
+    }
+
 
 }

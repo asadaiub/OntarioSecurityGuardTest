@@ -165,7 +165,6 @@ public class ExamActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
         editor.putInt("highScore", score);
         editor.apply();
-
         ShowDialog showDialog = new ShowDialog();
         showDialog.showCustomDialog(this, "Thanks", "You got " + score + " only", interstitialAd);
 

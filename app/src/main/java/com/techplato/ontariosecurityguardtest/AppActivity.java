@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -28,8 +29,8 @@ import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 import java.util.List;
 
 public class AppActivity extends AppCompatActivity {
+    public QuestionViewModel questionViewModel;
     AdView appActivityAdView;
-
     BottomAppBar bottomBar;
     CircularProgressBar easyProgress, mediumProgress, hardProgress;
     TextView easyProgressValue, mediumProgressValue, hardProgressValue;
@@ -41,7 +42,6 @@ public class AppActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int SPECIAL_EXAM_ID;
     private long backPressedTime;
-    private QuestionViewModel questionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +64,12 @@ public class AppActivity extends AppCompatActivity {
         examBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AppActivity.this, "DB: "+DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppActivity.this, "DB: " + DebugDB.getAddressLog(), Toast.LENGTH_SHORT).show();
                 SPECIAL_EXAM_ID = preferences.getInt("sExamId", 0);
 
                 if (SPECIAL_EXAM_ID == 5) {
                     questionViewModel.resetMainExam();
-                    SPECIAL_EXAM_ID=0;
+                    SPECIAL_EXAM_ID = 0;
                 }
                 SPECIAL_EXAM_ID++;
                 SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERANCE_NAME, MODE_PRIVATE).edit();
@@ -88,12 +88,11 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void initAd() {
-        MobileAds.initialize(this,getString(R.string.admobId));
+        MobileAds.initialize(this, getString(R.string.admobId));
     }
 
     private void initDB() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-
 
 
         questionViewModel.getMProgress(1).observe(this, new Observer<List<Question>>() {
@@ -123,7 +122,7 @@ public class AppActivity extends AppCompatActivity {
 
 
     void init() {
-        appActivityAdView=findViewById(R.id.appActivityAdView);
+        appActivityAdView = findViewById(R.id.appActivityAdView);
 
         easyParentCL = findViewById(R.id.easyParentCL);
         mediumParentCL = findViewById(R.id.mediumParentCL);
@@ -181,33 +180,8 @@ public class AppActivity extends AppCompatActivity {
             mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
         final View view = getLayoutInflater().inflate(R.layout.sheet_list, null);
-        (view.findViewById(R.id.sheetSetting)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Setting  clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        (view.findViewById(R.id.sheetShare)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        (view.findViewById(R.id.sheetRate)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Rate us clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        (view.findViewById(R.id.sheetAboutUs)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(view);
 
@@ -215,12 +189,48 @@ public class AppActivity extends AppCompatActivity {
 
         ((View) view.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-
         mBottomSheetDialog.show();
         mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 mBottomSheetDialog = null;
+            }
+        });
+
+        (view.findViewById(R.id.sheetSetting)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBottomSheetDialog.dismiss();
+                ShowDialog showDialog = new ShowDialog();
+                showDialog.showSettingsDialog(AppActivity.this, questionViewModel);
+            }
+        });
+
+        (view.findViewById(R.id.sheetShare)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Share this app");
+                intent.putExtra(Intent.EXTRA_TEXT, Constants.APP_LINK);
+                startActivity(Intent.createChooser(intent, "Sharing Option"));
+            }
+        });
+
+        (view.findViewById(R.id.sheetRate)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                intent1.setData(Uri.parse(Constants.APP_LINK));
+                startActivity(intent1);
+            }
+        });
+
+        (view.findViewById(R.id.sheetAboutUs)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }

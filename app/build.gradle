@@ -44,7 +44,6 @@ dependencies {
     //admob
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
 
-
     //third party lib
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'com.mikhaellopez:circularprogressbar:2.0.0'
