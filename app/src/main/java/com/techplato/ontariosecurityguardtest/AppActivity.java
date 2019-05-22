@@ -230,7 +230,10 @@ public class AppActivity extends AppCompatActivity {
         (view.findViewById(R.id.sheetAboutUs)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "About clicked", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.dismiss();
+
+                ShowDialog showDialog = new ShowDialog();
+                showDialog.showAboutDialog(AppActivity.this);
             }
         });
     }

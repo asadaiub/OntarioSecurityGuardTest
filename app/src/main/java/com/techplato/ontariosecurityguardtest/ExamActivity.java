@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +24,6 @@ import com.techplato.ontariosecurityguardtest.DB.QuestionViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +32,7 @@ public class ExamActivity extends AppCompatActivity {
     AdView examActivityAdView;
     Toolbar examToolbar;
     ImageButton examCloseIB;
+    ImageView option1IV,option2IV,option3IV,option4IV;
     TextView examQuestionTV, option1TV, option2TV, option3TV, option4TV, examQuestionTimerTV, examAnsweredTV, examQuestionTitleTV;
     LinearLayout option1, option2, option3, option4;
     MaterialButton examNextBtn;
@@ -105,7 +106,7 @@ public class ExamActivity extends AppCompatActivity {
                 public void onChanged(@Nullable List<Question> questions) {
 
                     mq = questions;
-                    Collections.reverse(mq);
+                    //Collections.reverse(mq);
                     if (mq.size() > 0) {
                         initQuestion(mq);
                     }
@@ -229,13 +230,6 @@ public class ExamActivity extends AppCompatActivity {
                 examNextBtn.setText("Next");
 
             }
-            if (mq.get(counter).getOptionType() == 2) {
-                option3.setVisibility(View.GONE);
-                option4.setVisibility(View.GONE);
-            } else {
-                option3.setVisibility(View.VISIBLE);
-                option4.setVisibility(View.VISIBLE);
-            }
             if (counter == 0) {
                 showData(counter);
                 counter++;
@@ -245,13 +239,6 @@ public class ExamActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     if (counter < mq.size()) {
-                        if (mq.get(counter).getOptionType() == 2) {
-                            option3.setVisibility(View.GONE);
-                            option4.setVisibility(View.GONE);
-                        } else {
-                            option3.setVisibility(View.VISIBLE);
-                            option4.setVisibility(View.VISIBLE);
-                        }
 
                         if (counter == mq.size() - 1) {
                             examNextBtn.setText("Finish");
@@ -281,15 +268,11 @@ public class ExamActivity extends AppCompatActivity {
         final Question mQuestion = mq.get(item);
 
         examQuestionTV.setText(mQuestion.getSingleQuestion());
-        if (mQuestion.getOptionType() == 2) {
-            option1TV.setText(mQuestion.getOptionOne());
-            option2TV.setText(mQuestion.getOptionTwo());
-        } else {
-            option1TV.setText(mQuestion.getOptionOne());
-            option2TV.setText(mQuestion.getOptionTwo());
-            option3TV.setText(mQuestion.getOptionThree());
-            option4TV.setText(mQuestion.getOptionFour());
-        }
+
+        option1TV.setText(mQuestion.getOptionOne());
+        option2TV.setText(mQuestion.getOptionTwo());
+        option3TV.setText(mQuestion.getOptionThree());
+        option4TV.setText(mQuestion.getOptionFour());
 
 
         if (mQuestion.getIsAnswered() == 1 && mQuestion.getIsRight() == 1) {
@@ -378,6 +361,13 @@ public class ExamActivity extends AppCompatActivity {
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
         option4 = findViewById(R.id.option4);
+
+        option1IV = findViewById(R.id.option1IV);
+        option2IV = findViewById(R.id.option2IV);
+        option3IV = findViewById(R.id.option3IV);
+        option4IV = findViewById(R.id.option4IV);
+
+
         examNextBtn = findViewById(R.id.examNextBtn);
         examActivityAdView = findViewById(R.id.examActivityAdView);
         examNextBtn.setText("Next");

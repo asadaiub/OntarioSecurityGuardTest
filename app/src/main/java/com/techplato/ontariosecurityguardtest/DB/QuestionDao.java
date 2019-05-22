@@ -41,7 +41,7 @@ public interface QuestionDao {
     LiveData<List<SubcategoryModel>> getSubcategoryList(int difType);
 
 
-    @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId ORDER BY isRight Desc")
+    @Query("Select * from question_bank where difficultType=:type and sectionId=:sectionId ORDER BY isRight")
     LiveData<List<Question>> getTestQuestion(int type, int sectionId);
 
 
