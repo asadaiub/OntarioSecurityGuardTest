@@ -1,7 +1,6 @@
 package com.techplato.ontariosecurityguardtest;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +32,7 @@ public class ShowDialog {
 
 
         final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
         dialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +96,6 @@ public class ShowDialog {
     }
 
 
-
     public void showAboutDialog(final Context context) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
@@ -106,7 +105,7 @@ public class ShowDialog {
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        ImageButton aboutBtn=(ImageButton)  dialogView.findViewById(R.id.aboutBtn);
+        ImageButton aboutBtn = (ImageButton) dialogView.findViewById(R.id.aboutBtn);
         aboutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

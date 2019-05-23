@@ -167,6 +167,7 @@ public class ExamActivity extends AppCompatActivity {
         editor.putInt("highScore", score);
         editor.apply();
         ShowDialog showDialog = new ShowDialog();
+
         showDialog.showCustomDialog(this, "Thanks", "You got " + score + " only", interstitialAd);
 
     }
